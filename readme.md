@@ -18,7 +18,7 @@
 
   <h3 align="center">Ginseng</h3>
   <p align="center">
-    A lightweight framework to build CLI tools
+    A lightweight framework to build C++ CLI tools
     <br />
     <a href="https://github.com/chewax/Ginseng"><strong>Explore the docs »</strong></a>
     <br />
