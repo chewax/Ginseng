@@ -1,0 +1,14 @@
+
+dist: trusty
+language: cpp
+sudo: false
+compiler:
+  - clang
+  - gcc
+os:
+  - linux
+
+script:
+  - cd ${TRAVIS_BUILD_DIR}/tests
+  - cmake .
+  - make && ./test
