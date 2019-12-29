@@ -1,12 +1,16 @@
 
-dist: trusty
 language: cpp
 sudo: false
+dist: trusty
 compiler:
   - clang
   - gcc
 os:
   - linux
+
+branches:
+  only:
+  - master
 
 script:
   - cd ${TRAVIS_BUILD_DIR}/tests
