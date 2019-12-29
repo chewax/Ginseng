@@ -77,7 +77,11 @@ Ginseng::Ginseng(std::string delim, std::function<void()> greet, std::function<v
 
 void Ginseng::clear_screen()
 {
-  std::printf("\033c");
+  #ifdef __linux__ 
+      std::printf("\033c");
+  #elif _WIN32
+      system("cls");
+  #endif
 }
 
 std::string Ginseng::pad_left(const std::string& str, const size_t length, const char chr) const
