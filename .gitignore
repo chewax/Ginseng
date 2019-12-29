@@ -1,3 +1,4 @@
 *.out
 .clang-format
 .vscode
+main.cpp

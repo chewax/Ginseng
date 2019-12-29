@@ -8,7 +8,7 @@
       "label": "build main",
       "command": "g++",
       "args": [
-        "*.cpp",
+        "main.cpp",
         "-o",
         "main.out",
         "-std=c++11"
