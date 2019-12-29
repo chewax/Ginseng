@@ -3,7 +3,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![Commit][last-commit-shield]][last-commit-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -152,19 +151,16 @@ Project Link: [https://github.com/chewax/Ginseng](https://github.com/chewax/Gins
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/chewax/Ginseng.svg
+[contributors-shield]: https://img.shields.io/github/contributors/chewax/Ginseng.svg?style=flat-square
 [contributors-url]: https://github.com/chewax/Ginseng/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/chewax/Ginseng.svg
+[forks-shield]: https://img.shields.io/github/forks/chewax/Ginseng.svg?style=flat-square
 [forks-url]: https://github.com/chewax/Ginseng/network/members
-[stars-shield]: https://img.shields.io/github/stars/chewax/Ginseng.svg
+[stars-shield]: https://img.shields.io/github/stars/chewax/Ginseng.svg?style=flat-square
 [stars-url]: https://github.com/chewax/Ginseng/stargazers
-[last-commit-shield]: https://img.shields.io/github/last-commit/chewax/Ginseng
-[last-commit-url] : https://github.com/last-commit/chewax/Ginseng
+[issues-shield]: https://img.shields.io/github/issues/chewax/Ginseng.svg?style=flat-square
 [issues-url]: https://github.com/chewax/Ginseng/issues
-[issues-shield]: https://img.shields.io/github/issues/chewax/Ginseng.svg
-[license-shield]: https://img.shields.io/github/license/chewax/Ginseng.svg
+[license-shield]: https://img.shields.io/github/license/chewax/Ginseng.svg?style=flat-square
 [license-url]: https://github.com/chewax/Ginseng/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/dwaksman
 [product-screenshot]: images/screenshot.png
-[github-follow-shield]: https://img.shields.io/github/followers/chewax?label=Follow&style=social
