@@ -1,6 +1,6 @@
 
 language: cpp
-sudo: false
+sudo: required
 dist: trusty
 compiler:
   - gcc
@@ -16,6 +16,9 @@ branches:
   only:
   - master
 
+install:
+  - sudo apt-get install libboost-all-dev
+  
 script:
   - cd ${TRAVIS_BUILD_DIR}/tests
   - cmake .
