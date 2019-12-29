@@ -1,8 +1,7 @@
 
 [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Build Status](https://travis-ci.org/chewax/Ginseng.svg?branch=master)](https://travis-ci.org/chewax/Ginseng)
 [![Last Commit][last-commit-shield]][last-commit-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
