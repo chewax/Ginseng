@@ -8,6 +8,11 @@ compiler:
 os:
   - linux
 
+before_install:
+  - echo "BEFORE INSTALL START"
+  - gem install bundler
+  - echo "BEFORE INSTALL END"
+  
 branches:
   only:
   - master
