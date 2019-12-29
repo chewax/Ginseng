@@ -3,6 +3,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![Last Commit][last-commit-shield]][last-commit-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -151,16 +152,18 @@ Project Link: [https://github.com/chewax/Ginseng](https://github.com/chewax/Gins
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/chewax/Ginseng.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/chewax/Ginseng.svg
 [contributors-url]: https://github.com/chewax/Ginseng/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/chewax/Ginseng.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/chewax/Ginseng.svg
 [forks-url]: https://github.com/chewax/Ginseng/network/members
-[stars-shield]: https://img.shields.io/github/stars/chewax/Ginseng.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/chewax/Ginseng.svg
 [stars-url]: https://github.com/chewax/Ginseng/stargazers
-[issues-shield]: https://img.shields.io/github/issues/chewax/Ginseng.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/chewax/Ginseng.svg
 [issues-url]: https://github.com/chewax/Ginseng/issues
-[license-shield]: https://img.shields.io/github/license/chewax/Ginseng.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/chewax/Ginseng.svg
 [license-url]: https://github.com/chewax/Ginseng/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/dwaksman
 [product-screenshot]: images/screenshot.png
+[last-commit-shield]: https://img.shields.io/github/last-commit/chewax/Ginseng
+[last-commit-url]: https://github.com/last-commit/chewax/Ginseng
