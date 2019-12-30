@@ -8,16 +8,16 @@
 
 
 
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/chewax/Ginseng">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="media/logo.svg" alt="Logo" width="1000" height="200">
   </a>
-
-  <h3 align="center">Ginseng</h3>
+  
   <p align="center">
-    A lightweight framework to build C++ CLI tools
+    <strong> A lightweight framework to build C++ CLI tools </strong>
     <br />
     <a href="https://github.com/chewax/Ginseng"><strong>Explore the docs »</strong></a>
     <br />
@@ -29,8 +29,6 @@
     <a href="https://github.com/chewax/Ginseng/issues">Request Feature</a>
   </p>
 </p>
-
-
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
@@ -52,19 +50,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Ginseng](media/sshot.1.png)
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`chewax`, `Ginseng`, `dwaksman`, `dwaksman@gmail.com`
-
-
-### Built With
-
-* []()
-* []()
-* []()
-
+This was intended to be something to learn a little bit more about C++. 
+I ended up actually liking what turned up so I decided to make it a realistic library.  
+This is a lightweight header only library that will help you build CLI tools faster.
 
 
 <!-- GETTING STARTED -->
@@ -74,32 +64,139 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
-```
+This library requires c++11.
 
 ### Installation
 
-1. Clone the Ginseng
+1. Clone the Ginseng into repo into your libs  
+
 ```sh
 git clone https://github.com/chewax/Ginseng.git
 ```
-2. Install NPM packages
-```sh
-npm install
-```
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Basic usage.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```c++
+#include "Ginseng.h"
 
+int main() 
+{
+	Ginseng cli();
+	cli.start();
+	return 0;
+}
+```
+
+This example will setup a basic CLI tool with empty commands. At this stage you can use commands such as ``help`` or ``exit``.
+
+### Configuring Delimiter.
+
+You can setup your own delimiter using the first parameter for such thing.
+
+```c++
+#include "Ginseng.h"
+
+int main() 
+{
+	Ginseng cli("$delim>");
+	cli.start();
+	return 0;
+}
+```
+
+### Configuring custom greet and farewell functions.
+
+Ginseng will let you handle certain events in your CLI. Such is the case of (obviously) commands. But also you can set up handlers for greet and goodbye if you wish.
+
+```c++
+#include "Ginseng.h"
+
+int main() 
+{
+	
+	Ginseng cli("$test>", []()
+	{
+		std::cout << "\nWELCOME TO MY AWESOME CLI!" << "\n";
+		std::cout << "Type \"help\" to start" << "\n";
+		std::cout << "" << "\n";
+		std::cout << "HAVE FUN!" << "\n";
+	},
+	[]()
+	{
+		std::cout << "\nBye My friend!" << "\n";
+	});
+	cli.start();
+	return 0;
+}
+```
+
+
+### Setting up commands.
+
+Commands can be created using ``add_command`` funciton.
+Such function receives 3 paramenters
+Namely:
+	1. Command Name
+	2. Command Handler (or Callback)
+	3. Command Help Struct
+
+Help struct is used to let Ginseng know how to print help information.
+Help struct is just 2 strings one for the argument list and one for the actual description.
+
+```
+Help hello_h("Says hello back at you", "[name]");
+```
+
+Callback function will be called passing a vector contining the list of arguments (including the command name) collected from the console.
+Vector will contain at least 1 element = the command name.  
+
+Callback funciton is required to return a success/fail return type Exit.
+Possible values are
+
+```
+	SUCCESS | INVALID_ARGUMENTS | ERROR
+```
+This is important to let Ginseng know of the result of the command.
+
+
+**Here is the final code for a more advanced setup with "Hello" Command:**
+
+```c++
+#include "Ginseng.h"
+
+int main() 
+{
+	//Create Ginseng CLI
+	Ginseng cli("$test>", []()
+	{
+		std::cout << "\nWELCOME TO MY AWESOME CLI!" << "\n";
+		std::cout << "Type \"help\" to start" << "\n";
+		std::cout << "" << "\n";
+		std::cout << "HAVE FUN!" << "\n";
+	},
+	[]()
+	{
+		std::cout << "\nBye My friend!" << "\n";
+	});
+	
+	//Create Help struct for hello command
+	Help hello_h("Says hello back at you", "[name]");
+	
+	//Add command to the CLI
+	cli.add_command("hello", [](std::vector<std::string> args) -> int
+	{ 
+		if (args.size() < 2) return Exit::INVALID_ARGUMENTS;
+		std::cout << "HELLO " << args[1] << std::endl; 
+		return Exit::SUCCESS;
+	}, hello_h);
+  
+	cli.start();
+	return 0;
+}
+```
 
 
 <!-- ROADMAP -->
@@ -132,21 +229,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@dwaksman](https://twitter.com/dwaksman) - dwaksman@gmail.com
-
+Daniel Waksman - [@dwaksman](https://twitter.com/dwaksman)  
 Project Link: [https://github.com/chewax/Ginseng](https://github.com/chewax/Ginseng)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->

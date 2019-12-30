@@ -44,6 +44,7 @@ struct Command
   Command(std::string t_name, CmdCallback t_cb, Help t_help) : name(t_name), cb(t_cb), help(t_help)
   {
   }
+
 };
 
 class Ginseng
@@ -100,7 +101,7 @@ std::string Ginseng::pad_right(const std::string& str, const size_t length, cons
 
 void Ginseng::greet()
 {
-  std::cout << "Welcome!" << std::endl;
+  std::cout << "\n Welcome!" << std::endl;
 }
 
 void Ginseng::farewell()

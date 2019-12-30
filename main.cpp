@@ -5,13 +5,17 @@
 int main()
 {
   // Ginseng cli("$test>");
-  Ginseng cli("$test>", [](){
-    std::cout << "WELCOME TO MY AWESOME CLI!" << "\n";
-    std::cout << "Type \"help\" to start" << "\n";
-    std::cout << "" << "\n";
-    std::cout << "HAVE FUN!" << "\n";
-
-  });
+  	Ginseng cli("$test>", []()
+	{
+		std::cout << "\nWELCOME TO MY AWESOME CLI!" << "\n";
+		std::cout << "Type \"help\" to start" << "\n";
+		std::cout << "" << "\n";
+		std::cout << "HAVE FUN!" << "\n";
+	},
+	[]()
+	{
+		std::cout << "\nBye My friend!" << "\n";
+	});
   // Ginseng cli;
   
   Help hello_h("Says hello back at you", "[name]");
