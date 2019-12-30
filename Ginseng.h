@@ -1,4 +1,7 @@
 #pragma once
+#ifndef GUARD_Ginseng
+#define GUARD_Ginseng
+
 #include <functional>
 #include <iostream>
 #include <map>
@@ -163,6 +166,7 @@ void Ginseng::start()
   while (true)
   {
     print_delimiter();
+
     std::string cmd_str;
     std::getline(std::cin, cmd_str);
     std::vector<std::string> args = parse(cmd_str);
@@ -177,6 +181,7 @@ void Ginseng::start()
       continue;
     }
 
+    //If command is found insid the commands list.
     if (commands.find(args[0]) != commands.end())
     {
       std::cout << std::endl;
@@ -201,3 +206,5 @@ void Ginseng::add_command(std::string name, CmdCallback cb, Help help)
 {
   commands[name] = Command(name, cb, help);
 }
+
+#endif
