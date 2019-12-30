@@ -34,9 +34,7 @@
 ## About The Project
 
 ![Ginseng](media/sshot.1.png)
-
-This was intended to be something to learn a little bit more about C++. 
-I ended up actually liking what turned up so I decided to make it a realistic library.  
+ 
 This is a lightweight header only library that will help you build CLI tools faster.
 
 
