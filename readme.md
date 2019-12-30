@@ -1,49 +1,32 @@
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/chewax/Ginseng">
+    <img src="media/logo.svg" alt="Logo" width="660" height="260">
+  </a>
+  
+</p>
+
+<br>
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 [![Build Status](https://travis-ci.org/chewax/Ginseng.svg?branch=master)](https://travis-ci.org/chewax/Ginseng)
 [![Last Commit][last-commit-shield]][last-commit-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
-
-
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/chewax/Ginseng">
-    <img src="media/logo.svg" alt="Logo" width="1000" height="200">
-  </a>
-  
-  <p align="center">
-    <strong> A lightweight framework to build C++ CLI tools </strong>
-    <br />
-    <a href="https://github.com/chewax/Ginseng"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/chewax/Ginseng">View Demo</a>
-    ·
-    <a href="https://github.com/chewax/Ginseng/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/chewax/Ginseng/issues">Request Feature</a>
-  </p>
-</p>
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-  * [Built With](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
 * [Usage](#usage)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
 * [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
 
 
 
@@ -229,7 +212,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Daniel Waksman - [@dwaksman](https://twitter.com/dwaksman)  
+[![LinkedIn][linkedin-shield]][linkedin-url]
+![Twitter Follow](https://img.shields.io/twitter/follow/dwaksman?label=Follow&style=social)  
 Project Link: [https://github.com/chewax/Ginseng](https://github.com/chewax/Ginseng)
 
 
