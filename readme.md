@@ -1,10 +1,8 @@
 <!-- PROJECT LOGO -->
-<br />
 <p align="center">
   <a href="https://github.com/chewax/Ginseng">
     <img src="media/logo.svg" alt="Logo" width="660" height="260">
   </a>
-  
 </p>
 
 <br>
