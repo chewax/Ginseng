@@ -33,7 +33,7 @@
 
 ![Ginseng](media/sshot.1.png)
  
-This is a lightweight header only library that will help you build CLI tools faster.
+This is a lightweight header only library that will help you build REPL tools faster.
 
 
 <!-- GETTING STARTED -->
@@ -69,7 +69,7 @@ int main()
 }
 ```
 
-This example will setup a basic CLI tool with empty commands. At this stage you can use commands such as ``help`` or ``exit``.
+This example will setup a basic REPL tool with empty commands. At this stage you can use commands such as ``help`` or ``exit``.
 
 ### Configuring Delimiter.
 
@@ -88,7 +88,7 @@ int main()
 
 ### Configuring custom greet and farewell functions.
 
-Ginseng will let you handle certain events in your CLI. Such is the case of (obviously) commands. But also you can set up handlers for greet and goodbye if you wish.
+Ginseng will let you handle certain events in your REPL. Such is the case of (obviously) commands. But also you can set up handlers for greet and goodbye if you wish.
 
 ```c++
 #include "Ginseng.h"
@@ -98,7 +98,7 @@ int main()
 	
 	Ginseng cli("$test>", []()
 	{
-		std::cout << "\nWELCOME TO MY AWESOME CLI!" << "\n";
+		std::cout << "\nWELCOME TO MY AWESOME RELP!" << "\n";
 		std::cout << "Type \"help\" to start" << "\n";
 		std::cout << "" << "\n";
 		std::cout << "HAVE FUN!" << "\n";
@@ -148,10 +148,10 @@ This is important to let Ginseng know of the result of the command.
 
 int main() 
 {
-	//Create Ginseng CLI
+	//Create Ginseng REPL
 	Ginseng cli("$test>", []()
 	{
-		std::cout << "\nWELCOME TO MY AWESOME CLI!" << "\n";
+		std::cout << "\nWELCOME TO MY AWESOME REPL!" << "\n";
 		std::cout << "Type \"help\" to start" << "\n";
 		std::cout << "" << "\n";
 		std::cout << "HAVE FUN!" << "\n";
@@ -164,7 +164,7 @@ int main()
 	//Create Help struct for hello command
 	Help hello_h("Says hello back at you", "[name]");
 	
-	//Add command to the CLI
+	//Add command to the REPL
 	cli.add_command("hello", [](std::vector<std::string> args) -> int
 	{ 
 		if (args.size() < 2) return Exit::INVALID_ARGUMENTS;
