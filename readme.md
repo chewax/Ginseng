@@ -63,8 +63,8 @@ git clone https://github.com/chewax/Ginseng.git
 
 int main() 
 {
-	Ginseng cli();
-	cli.start();
+	Ginseng repl;
+	repl.start();
 	return 0;
 }
 ```
@@ -80,8 +80,8 @@ You can setup your own delimiter using the first parameter for such thing.
 
 int main() 
 {
-	Ginseng cli("$delim>");
-	cli.start();
+	Ginseng repl("$delim>");
+	repl.start();
 	return 0;
 }
 ```
@@ -96,7 +96,7 @@ Ginseng will let you handle certain events in your REPL. Such is the case of (ob
 int main() 
 {
 	
-	Ginseng cli("$test>", []()
+	Ginseng repl("$test>", []()
 	{
 		std::cout << "\nWELCOME TO MY AWESOME RELP!" << "\n";
 		std::cout << "Type \"help\" to start" << "\n";
@@ -107,7 +107,7 @@ int main()
 	{
 		std::cout << "\nBye My friend!" << "\n";
 	});
-	cli.start();
+	repl.start();
 	return 0;
 }
 ```
@@ -149,7 +149,7 @@ This is important to let Ginseng know of the result of the command.
 int main() 
 {
 	//Create Ginseng REPL
-	Ginseng cli("$test>", []()
+	Ginseng repl("$test>", []()
 	{
 		std::cout << "\nWELCOME TO MY AWESOME REPL!" << "\n";
 		std::cout << "Type \"help\" to start" << "\n";
@@ -165,14 +165,14 @@ int main()
 	Help hello_h("Says hello back at you", "[name]");
 	
 	//Add command to the REPL
-	cli.add_command("hello", [](std::vector<std::string> args) -> int
+	repl.add_command("hello", [](std::vector<std::string> args) -> int
 	{ 
 		if (args.size() < 2) return Exit::INVALID_ARGUMENTS;
 		std::cout << "HELLO " << args[1] << std::endl; 
 		return Exit::SUCCESS;
 	}, hello_h);
   
-	cli.start();
+	repl.start();
 	return 0;
 }
 ```
