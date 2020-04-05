@@ -114,7 +114,7 @@ void Ginseng::farewell()
 
 void Ginseng::print_help()
 {
-  for (auto cmd : commands)
+  for (const auto& cmd : commands)
   {
     std::cout << pad_left(cmd.second.name, COL_WIDTH, ' ') << " "
               << pad_right(cmd.second.help.arguments, COL_WIDTH, ' ') << " " << cmd.second.help.description << "\n";
