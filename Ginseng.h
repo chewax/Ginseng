@@ -182,10 +182,11 @@ void Ginseng::start()
     }
 
     //If command is found insid the commands list.
-    if (commands.find(args[0]) != commands.end())
+    auto it = commands.find(args[0]);
+    if (it != commands.end())
     {
       std::cout << std::endl;
-      Command cmd = commands.at(args[0]);
+      Command cmd = it->second;
       int res = cmd.cb(args);
       if (res != Exit::SUCCESS)
       {
