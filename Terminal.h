@@ -7,8 +7,8 @@ class Terminal
 {
 public:
   template <typename... Args>
-  void printf(const std::string& msg, Args... args);
-  void println(const std::string& msg);
+  void printf(const std::string &msg, Args... args);
+  void println(const std::string &msg);
   void cls(); // clear screen;
   std::string prompt(const std::string delimiter);
 
@@ -18,15 +18,15 @@ public:
 private:
   void init_screen();
   void destroy_screen();
-  void refresh_line(const std::string& new_value, const std::string delimiter);
-  void end_command(const std::string& command);
+  void refresh_line(const std::string &new_value, const std::string delimiter);
+  void end_command(const std::string &command);
   void cr(); // carriage return;
   std::string delimiter = "> ";
 
   std::vector<std::string> history;
   std::vector<std::string>::iterator it;
 
-  WINDOW* _window;
+  WINDOW *_window;
 };
 
 Terminal::Terminal()
@@ -47,7 +47,7 @@ void Terminal::cls()
 }
 
 // Refresh line with parameter string.
-void Terminal::refresh_line(const std::string& new_value, const std::string delimiter)
+void Terminal::refresh_line(const std::string &new_value, const std::string delimiter)
 {
   int x;
   int y;
@@ -66,23 +66,23 @@ void Terminal::cr()
 }
 
 // Refresh line with parameter string.
-void Terminal::end_command(const std::string& command)
+void Terminal::end_command(const std::string &command)
 {
-  // wprintw(_window, "\n");
-  if (command == "" || command == "...") return;
+  if (command == "" || command == "...")
+    return;
   history.push_back(command);
   it = history.end();
 }
 
 // Safely prints into command feedback window row.
 template <typename... Args>
-void Terminal::printf(const std::string& msg, Args... args)
+void Terminal::printf(const std::string &msg, Args... args)
 {
   wprintw(_window, msg.c_str(), args...);
   wrefresh(_window);
 }
 
-void Terminal::println(const std::string& msg)
+void Terminal::println(const std::string &msg)
 {
   wprintw(_window, msg.c_str());
   cr();
@@ -94,8 +94,9 @@ std::string Terminal::prompt(const std::string delimiter = ">")
   refresh_line("", delimiter);
   int c = wgetch(_window);
   std::string command;
+  bool eoc = false;
 
-  while (c != 10) //!= CR
+  while (!eoc) //!= CR
   {
     switch (c)
     {
@@ -104,7 +105,8 @@ std::string Terminal::prompt(const std::string delimiter = ">")
       // Handle key up press
       // Retrieves previous from history
       {
-        if (it > history.begin()) it--;
+        if (it > history.begin())
+          it--;
         ;
         command = (*it);
         break;
@@ -114,7 +116,8 @@ std::string Terminal::prompt(const std::string delimiter = ">")
       // Handles key down press
       // Retrieves following command from history
       {
-        if (it < history.end()) it++;
+        if (it < history.end())
+          it++;
         if (it == history.end())
           command = "";
         else
@@ -130,11 +133,19 @@ std::string Terminal::prompt(const std::string delimiter = ">")
         break;
       }
 
+    case 10:
+      // Return key
+      {
+        eoc = command.size() > 0;
+        break;
+      }
+
     default:
       // Handles non special characters
       // Appends character to buffered command
       {
-        if (c != -1) command += c; // Input in current loop (-1 == ERR)
+        if (c != -1)
+          command += c; // Input in current loop (-1 == ERR)
         break;
       }
     }
@@ -144,7 +155,8 @@ std::string Terminal::prompt(const std::string delimiter = ">")
 
   end_command(command);
 
-  if (command == "" || command == "...") return "";
+  if (command == "" || command == "...")
+    return "";
   return command;
 }
 
@@ -162,8 +174,10 @@ void Terminal::init_screen()
   start_x = 0;
 
   _window = newwin(height, width, start_y, start_x);
+
   keypad(_window, true);
   nodelay(_window, true);
+  scrollok(_window, TRUE);
 
   history.push_back("...");
   it = history.end();
