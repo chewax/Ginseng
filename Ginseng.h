@@ -4,6 +4,7 @@
 
 #include "Terminal.h"
 #include <functional>
+#include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
@@ -159,7 +160,7 @@ void Ginseng::handle_error(int err)
   switch (err)
   {
   case Exit::INVALID_ARGUMENTS:
-    term.printf("Invalid Arguments, type \"help\" for details.");
+    term.println("Invalid Arguments, type \"help\" for details.");
     break;
 
   default:
@@ -191,7 +192,6 @@ void Ginseng::start()
     auto it = commands.find(args[0]);
     if (it != commands.end())
     {
-      std::cout << std::endl;
       Command cmd = it->second;
       int res = cmd.cb(args);
       if (res != Exit::SUCCESS)
