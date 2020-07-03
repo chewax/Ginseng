@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef __Terminal_H
+#define __Terminal_H
+
 #include <ncurses.h>
 #include <sstream>
 #include <string>
@@ -239,3 +242,5 @@ void Terminal::destroy_screen()
   // deallocates memory and ends ncurses
   endwin();
 }
+
+#endif
