@@ -2,3 +2,4 @@
 .clang-format
 .vscode
 main.cpp
+build
