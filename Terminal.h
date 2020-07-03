@@ -1,3 +1,25 @@
+// MIT License
+
+// Copyright (c) [2020] [Daniel Waksman]
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 #include <ncurses.h>
 #include <sstream>
 #include <string>
@@ -39,14 +61,20 @@ Terminal::~Terminal()
   destroy_screen();
 }
 
-// Clears screen.
+/**
+ * OS safe screen clear
+ **/
 void Terminal::cls()
 {
   wmove(_window, 0, 0);
   wclrtobot(_window);
 }
 
-// Refresh line with parameter string.
+/**
+ * Refreshes line with value and prepends delimiter
+ * @param std::string new line value
+ * @param std::string delimiter
+ **/
 void Terminal::refresh_line(const std::string &new_value, const std::string delimiter)
 {
   int x;
@@ -58,14 +86,19 @@ void Terminal::refresh_line(const std::string &new_value, const std::string deli
   wrefresh(_window);
 }
 
-// Adds a Carriage Return
+/**
+ * Adds carriage return to current line
+ **/
 void Terminal::cr()
 {
   wprintw(_window, "\n");
   wrefresh(_window);
 }
 
-// Refresh line with parameter string.
+/**
+ * Ends command prompt.
+ * Adds command to history and resets iterator pointer.
+ **/
 void Terminal::end_command(const std::string &command)
 {
   if (command == "" || command == "...")
@@ -74,7 +107,11 @@ void Terminal::end_command(const std::string &command)
   it = history.end();
 }
 
-// Safely prints into command feedback window row.
+/**
+ * Prints a formated message into current cursor position.
+ * @param std::string text with format
+ * @param multiple formatting arguments
+ **/
 template <typename... Args>
 void Terminal::printf(const std::string &msg, Args... args)
 {
@@ -82,12 +119,20 @@ void Terminal::printf(const std::string &msg, Args... args)
   wrefresh(_window);
 }
 
+/**
+ * Prints a string to current cursor position.
+ * Adds carriage return.
+ **/
 void Terminal::println(const std::string &msg)
 {
   wprintw(_window, msg.c_str());
   cr();
 }
 
+/**
+ * Prompts for user input.
+ * @param delimiter Delimiter to be used in prompt
+ **/
 std::string Terminal::prompt(const std::string delimiter = ">")
 {
   cr();
@@ -160,6 +205,10 @@ std::string Terminal::prompt(const std::string delimiter = ">")
   return command;
 }
 
+/**
+ * Initializes ncurses screen
+ * Will only create one default screen to handle the whole terminal
+ **/
 void Terminal::init_screen()
 {
   // NCURSES init
@@ -175,9 +224,9 @@ void Terminal::init_screen()
 
   _window = newwin(height, width, start_y, start_x);
 
-  keypad(_window, true);
+  keypad(_window, true); //Use keypad`
   nodelay(_window, true);
-  scrollok(_window, TRUE);
+  scrollok(_window, TRUE); //Enable scroll
 
   history.push_back("...");
   it = history.end();
