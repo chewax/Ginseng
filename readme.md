@@ -33,7 +33,8 @@
 
 ![Ginseng](media/sshot.1.png)
  
-This is a lightweight header only library that will help you build REPL tools faster.
+This is a lightweight header only library that will help you build REPL tools faster. It is based on the **ncurses** library.
+Before proceeding with installation please make sure you have this library installed.
 
 
 <!-- GETTING STARTED -->
@@ -43,7 +44,9 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This library requires c++11.
+1. c++11
+2. ncurses
+
 
 ### Installation
 
@@ -96,47 +99,48 @@ Ginseng will let you handle certain events in your REPL. Such is the case of (ob
 int main() 
 {
 	
-	Ginseng repl("$test>", []()
-	{
-		std::cout << "\nWELCOME TO MY AWESOME RELP!" << "\n";
-		std::cout << "Type \"help\" to start" << "\n";
-		std::cout << "" << "\n";
-		std::cout << "HAVE FUN!" << "\n";
-	},
-	[]()
-	{
-		std::cout << "\nBye My friend!" << "\n";
-	});
+	Ginseng repl("$test>",
+	  [&repl]() {
+	    repl.println("WELCOME TO MY AWESOME RELP!");
+	    repl.println("Type \"help\" to start");
+	    repl.println("");
+	    repl.println("HAVE FUN!");
+	  },
+	  [&repl]() {
+	    repl.println("BYE!");
+	  });
 	repl.start();
 	return 0;
 }
 ```
 
-
 ### Setting up commands.
 
-Commands can be created using ``add_command`` funciton.
+Commands can be created using ``add_command`` function.
 Such function receives 3 paramenters
-Namely:
-	1. Command Name
-	2. Command Handler (or Callback)
-	3. Command Help Struct
+Namely:  
+
+1. Command Name  
+2. Command Handler (or Callback)  
+3. Command Help Struct
 
 Help struct is used to let Ginseng know how to print help information.
 Help struct is just 2 strings one for the argument list and one for the actual description.
 
 ```
-Help hello_h("Says hello back at you", "[name]");
+// Help(std::string desc, std::string args);
+Help hello_help("Says hello back at you", "[name]");
 ```
 
 Callback function will be called passing a vector contining the list of arguments (including the command name) collected from the console.
-Vector will contain at least 1 element = the command name.  
+Vector will contain at least 1 element (namely: the command name).  
 
-Callback funciton is required to return a success/fail return type Exit.
+Callback function is required to return a success/fail return type Exit.
 Possible values are
 
 ```
-	SUCCESS | INVALID_ARGUMENTS | ERROR
+	[ SUCCESS|INVALID_ARGUMENTS|ERROR ]
+	//eg: Exit::SUCCESS
 ```
 This is important to let Ginseng know of the result of the command.
 
@@ -146,34 +150,37 @@ This is important to let Ginseng know of the result of the command.
 ```c++
 #include "Ginseng.h"
 
-int main() 
+int main()
 {
-	//Create Ginseng REPL
-	Ginseng repl("$test>", []()
-	{
-		std::cout << "\nWELCOME TO MY AWESOME REPL!" << "\n";
-		std::cout << "Type \"help\" to start" << "\n";
-		std::cout << "" << "\n";
-		std::cout << "HAVE FUN!" << "\n";
-	},
-	[]()
-	{
-		std::cout << "\nBye My friend!" << "\n";
-	});
-	
-	//Create Help struct for hello command
-	Help hello_h("Says hello back at you", "[name]");
-	
-	//Add command to the REPL
-	repl.add_command("hello", [](std::vector<std::string> args) -> int
-	{ 
-		if (args.size() < 2) return Exit::INVALID_ARGUMENTS;
-		std::cout << "HELLO " << args[1] << std::endl; 
-		return Exit::SUCCESS;
-	}, hello_h);
-  
-	repl.start();
-	return 0;
+  //Create Ginseng REPL
+  Ginseng repl(
+      "$test>",
+      [&repl]() {
+        repl.println("WELCOME TO MY AWESOME RELP!");
+        repl.println("Type \"help\" to start");
+        repl.println("");
+        repl.println("HAVE FUN!");
+      },
+      [&repl]() {
+        repl.println("BYE!");
+      });
+
+  // Create Help struct for hello command
+  Help hello_help("Says hello back at you", "[name]");
+
+  // Add "hello" command to the REPL
+  repl.add_command(
+      "hello",
+      [&repl](std::vector<std::string> args) -> int {
+        if (args.size() < 2)
+          return Exit::INVALID_ARGUMENTS;
+        repl.printf("HELLO %s\n", args[1].c_str());
+        return Exit::SUCCESS;
+      },
+      hello_help);
+
+  repl.start();
+  return 0;
 }
 ```
 
