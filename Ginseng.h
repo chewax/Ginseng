@@ -19,6 +19,10 @@ enum Exit
   ERROR = 9
 };
 
+/**
+ * @struct Help
+ * Struct intended to hold a command's help information
+ **/
 struct Help
 {
   std::string description;
@@ -33,6 +37,10 @@ struct Help
   }
 };
 
+/**
+ * @struct Command
+ * Struct to hold all the information related with a command.
+ */
 struct Command
 {
   std::string name;
@@ -48,6 +56,11 @@ struct Command
   }
 };
 
+/**
+ * @class Ginseng
+ * This class handles all command specifict functions
+ * Intended to provide a simplified interface to buidl and mantain a REPL tool
+ **/
 class Ginseng
 {
 private:
@@ -66,8 +79,6 @@ private:
   Terminal term;
 
 public:
-  void greet();
-  void farewell();
   void add_command(std::string name, CmdCallback cb, Help help);
   void start();
   Ginseng(std::string delim, std::function<void()> greet, std::function<void()> farewell);
@@ -82,23 +93,41 @@ Ginseng::Ginseng(std::string delim, std::function<void()> greet, std::function<v
 {
 }
 
-// Safely prints into command feedback window row.
+/**
+ * Prints a formated message into current cursor position.
+ * @param std::string text with format
+ * @param multiple formatting arguments
+ **/
 template <typename... Args>
 void Ginseng::printf(const std::string &msg, Args... args)
 {
   term.printf(msg, args...);
 }
 
+/**
+ * Helper function to clear screen
+ **/
 void Ginseng::println(const std::string &msg)
 {
   term.println(msg);
 }
 
+/**
+ * Helper function to clear screen
+ * OS independent.
+ **/
 void Ginseng::clear_screen()
 {
   term.cls();
 }
 
+/**
+ * Helper function to pad string to the left
+ * @param std::string string to be padded
+ * @param size_t final lenght of the string
+ * @param char char to pad with
+ * @return std::string padded string.
+ **/
 std::string Ginseng::pad_left(const std::string &str, const size_t length, const char chr) const
 {
   std::string ret(str);
@@ -106,6 +135,13 @@ std::string Ginseng::pad_left(const std::string &str, const size_t length, const
   return ret;
 }
 
+/**
+ * Helper function to pad string to the right
+ * @param std::string string to be padded
+ * @param size_t final lenght of the string
+ * @param char char to pad with
+ * @return std::string padded string.
+ **/
 std::string Ginseng::pad_right(const std::string &str, const size_t length, const char chr) const
 {
   std::string ret(str);
@@ -113,16 +149,9 @@ std::string Ginseng::pad_right(const std::string &str, const size_t length, cons
   return ret;
 }
 
-void Ginseng::greet()
-{
-  term.println("Welcome!");
-}
-
-void Ginseng::farewell()
-{
-  term.println("Bye.");
-}
-
+/**
+ * Helper function to print help for both preshipped functions and user defined commands
+ **/
 void Ginseng::print_help()
 {
   term.println("");
@@ -140,25 +169,37 @@ void Ginseng::print_help()
   term.println(pad_right("", COL_WIDTH * 3, '-').c_str());
 }
 
+/**
+ * Helper function to print the defined delimiter at current cursor position.
+ */
 void Ginseng::print_delimiter()
 {
   term.printf("%s ", delimiter.c_str());
 }
 
+/**
+ * Will split a string. Every token is considered to end at a " " (space).
+ * @param std::string string to be tokenized
+ * @return std::vector<std::string> token array
+ */
 std::vector<std::string> Ginseng::parse(std::string str)
 {
-  std::vector<std::string> strings;
+  std::vector<std::string> tokens;
   std::istringstream src(str);
-  std::string s;
+  std::string tok;
 
-  while (std::getline(src, s, ' '))
+  while (std::getline(src, tok, ' '))
   {
-    strings.push_back(s);
+    tokens.push_back(tok);
   }
 
-  return strings;
+  return tokens;
 }
 
+/**
+ * Handle execution ERROR
+ * @param int Error code. See enum Exit.
+ */
 void Ginseng::handle_error(int err)
 {
   switch (err)
@@ -172,6 +213,10 @@ void Ginseng::handle_error(int err)
   }
 }
 
+/**
+ *  Starts the execution of the REPL.
+ *  Thought to be called independently to allow configurations prior to launch
+ */
 void Ginseng::start()
 {
   greet_handler();
@@ -218,6 +263,12 @@ void Ginseng::start()
   farewell_handler();
 }
 
+/**
+ * Adds a command to the command pool
+ * @param std::string identifier to be used for invoking the command.
+ * @param std::function<int(std::vector<std::string>)> handler to be called when the command is invoked
+ * @param Help struct containing help for given command.
+ **/
 void Ginseng::add_command(std::string name, CmdCallback cb, Help help)
 {
   commands[name] = Command(name, cb, help);
