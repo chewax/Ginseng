@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Start using "changelog"
 - Added ncurses to handle terminal interaction
+- Added new public functions to handle IO (ie: printf, println);
 
 ### Changed
 
 ### Removed
+- Removed support for iostream. All terminal IO interactions must be done using Ginseng own functions.
 
 
