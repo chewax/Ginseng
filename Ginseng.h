@@ -125,13 +125,19 @@ void Ginseng::farewell()
 
 void Ginseng::print_help()
 {
+  term.println("");
+  term.printf("%s %s %s\n", pad_right("Commmand", COL_WIDTH, ' ').c_str(), pad_right("Args", COL_WIDTH, ' ').c_str(), "Description");
+  term.println(pad_right("", COL_WIDTH * 3, '-').c_str());
+
   for (const auto &cmd : commands)
   {
-    term.printf("%s %s %s\n", pad_left(cmd.second.name, COL_WIDTH, ' ').c_str(), pad_right(cmd.second.help.arguments, COL_WIDTH, ' ').c_str(),
+    term.printf("%s %s %s\n", pad_right(cmd.second.name, COL_WIDTH, ' ').c_str(), pad_right(cmd.second.help.arguments, COL_WIDTH, ' ').c_str(),
                 cmd.second.help.description.c_str());
   }
 
-  term.printf("%s %s %s\n", pad_left("exit", COL_WIDTH, ' ').c_str(), pad_right("", COL_WIDTH, ' ').c_str(), "Terminates the execution");
+  term.printf("%s %s %s\n", pad_right("exit", COL_WIDTH, ' ').c_str(), pad_right("", COL_WIDTH, ' ').c_str(), "Terminates the execution");
+  term.printf("%s %s %s\n", pad_right("cls", COL_WIDTH, ' ').c_str(), pad_right("", COL_WIDTH, ' ').c_str(), "Clears the screen");
+  term.println(pad_right("", COL_WIDTH * 3, '-').c_str());
 }
 
 void Ginseng::print_delimiter()
@@ -180,9 +186,15 @@ void Ginseng::start()
     if (args[0] == std::string("exit") || args[0] == std::string("quit") || args[0] == std::string(":q"))
       break;
 
-    if (args[0] == "help")
+    if (args[0] == "help" || args[0] == "?" || args[0] == ":h")
     {
       print_help();
+      continue;
+    }
+
+    if (args[0] == "cls")
+    {
+      term.cls();
       continue;
     }
 
