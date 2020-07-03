@@ -2,8 +2,8 @@
 #ifndef GUARD_Ginseng
 #define GUARD_Ginseng
 
+#include "Terminal.h"
 #include <functional>
-#include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
@@ -47,7 +47,6 @@ struct Command
   Command(std::string t_name, CmdCallback t_cb, Help t_help) : name(t_name), cb(t_cb), help(t_help)
   {
   }
-
 };
 
 class Ginseng
@@ -62,40 +61,53 @@ private:
   void handle_error(int err);
   std::function<void()> greet_handler;
   std::function<void()> farewell_handler;
-  std::string pad_left(const std::string& str, const size_t length, const char chr) const;
-  std::string pad_right(const std::string& str, const size_t length, const char chr) const;
+  std::string pad_left(const std::string &str, const size_t length, const char chr) const;
+  std::string pad_right(const std::string &str, const size_t length, const char chr) const;
   std::vector<std::string> parse(std::string str);
+  Terminal term;
 
 public:
-  static void greet();
-  static void farewell();
+  void greet();
+  void farewell();
   void add_command(std::string name, CmdCallback cb, Help help);
   void start();
-  Ginseng(std::string delim = ">", std::function<void()> greet = Ginseng::greet, std::function<void()> farewell = Ginseng::farewell);
+  Ginseng(std::string delim, std::function<void()> greet, std::function<void()> farewell);
+
+  template <typename... Args>
+  void printf(const std::string &msg, Args... args);
+  void println(const std::string &msg);
 };
 
 Ginseng::Ginseng(std::string delim, std::function<void()> greet, std::function<void()> farewell)
-  : delimiter(delim), greet_handler(greet), farewell_handler(farewell)
+    : delimiter(delim), greet_handler(greet), farewell_handler(farewell)
 {
+}
+
+// Safely prints into command feedback window row.
+template <typename... Args>
+void Ginseng::printf(const std::string &msg, Args... args)
+{
+  term.printf(msg, args...);
+}
+
+void Ginseng::println(const std::string &msg)
+{
+  term.println(msg);
 }
 
 void Ginseng::clear_screen()
 {
-  #ifdef __linux__ 
-      std::printf("\033c");
-  #elif _WIN32
-      system("cls");
-  #endif
+  term.cls();
 }
 
-std::string Ginseng::pad_left(const std::string& str, const size_t length, const char chr) const
+std::string Ginseng::pad_left(const std::string &str, const size_t length, const char chr) const
 {
   std::string ret(str);
   ret.insert(ret.begin(), length - str.size(), chr);
   return ret;
 }
 
-std::string Ginseng::pad_right(const std::string& str, const size_t length, const char chr) const
+std::string Ginseng::pad_right(const std::string &str, const size_t length, const char chr) const
 {
   std::string ret(str);
   ret.insert(ret.end(), length - str.size(), chr);
@@ -104,31 +116,29 @@ std::string Ginseng::pad_right(const std::string& str, const size_t length, cons
 
 void Ginseng::greet()
 {
-  std::cout << "\n Welcome!" << std::endl;
+  term.println("Welcome!");
 }
 
 void Ginseng::farewell()
 {
-  std::cout << "Bye." << std::endl;
+  term.println("Bye.");
 }
 
 void Ginseng::print_help()
 {
-  for (const auto& cmd : commands)
+  for (const auto &cmd : commands)
   {
-    std::cout << pad_left(cmd.second.name, COL_WIDTH, ' ') << " "
-              << pad_right(cmd.second.help.arguments, COL_WIDTH, ' ') << " " << cmd.second.help.description << "\n";
+    term.printf("%s %s %s\n", pad_left(cmd.second.name, COL_WIDTH, ' ').c_str(), pad_right(cmd.second.help.arguments, COL_WIDTH, ' ').c_str(),
+                cmd.second.help.description.c_str());
   }
 
-  std::cout << pad_left("exit", COL_WIDTH, ' ') << " " << pad_right("", COL_WIDTH, ' ') << " "
-            << "Terminates the execution" << std::endl;
+  term.printf("%s %s %s\n", pad_left("exit", COL_WIDTH, ' ').c_str(), pad_right("", COL_WIDTH, ' ').c_str(), "Terminates the execution");
 }
 
 void Ginseng::print_delimiter()
 {
-  std::cout << delimiter << " ";
+  term.printf("%s ", delimiter.c_str());
 }
-
 
 std::vector<std::string> Ginseng::parse(std::string str)
 {
@@ -149,7 +159,7 @@ void Ginseng::handle_error(int err)
   switch (err)
   {
   case Exit::INVALID_ARGUMENTS:
-    std::cout << "Invalid Arguments, type \"help\" for details." << std::endl;
+    term.printf("Invalid Arguments, type \"help\" for details.");
     break;
 
   default:
@@ -157,31 +167,27 @@ void Ginseng::handle_error(int err)
   }
 }
 
-
 void Ginseng::start()
 {
-  clear_screen();
   greet_handler();
 
   while (true)
   {
-    print_delimiter();
 
-    std::string cmd_str;
-    std::getline(std::cin, cmd_str);
+    std::string cmd_str = term.prompt(delimiter);
+    term.println("");
     std::vector<std::string> args = parse(cmd_str);
 
-    if (args[0] == std::string("exit") || args[0] == std::string("quit"))
+    if (args[0] == std::string("exit") || args[0] == std::string("quit") || args[0] == std::string(":q"))
       break;
 
     if (args[0] == "help")
     {
-      std::cout << std::endl;
       print_help();
       continue;
     }
 
-    //If command is found insid the commands list.
+    // If command is found insid the commands list.
     auto it = commands.find(args[0]);
     if (it != commands.end())
     {
@@ -195,13 +201,12 @@ void Ginseng::start()
     }
     else
     {
-      std::cout << "Command not found." << std::endl;
+      term.println("Command not found.");
     }
   }
 
   farewell_handler();
 }
-
 
 void Ginseng::add_command(std::string name, CmdCallback cb, Help help)
 {
